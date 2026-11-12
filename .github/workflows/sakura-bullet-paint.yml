@@ -1,0 +1,29 @@
+name: Sakura Bullet Paint Mission
+
+on:
+  push:
+    paths:
+      - 'sakura-plan.json'
+  workflow_dispatch:
+  schedule:
+    - cron: '15 2 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  execute-mission:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Canvas Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Execute Sakura Bullet Plan
+        run: node scripts/execute-mission.mjs
